@@ -11,5 +11,6 @@ M.ui = {
   },
 }
 M.plugins = 'custom.plugins'
+vim.cmd('hi Normal guibg=none')
 
 return M
