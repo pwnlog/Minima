@@ -12,13 +12,48 @@ precmd_functions+=(_fix_cursor)
 #      MUST HAVE ALIAS      #
 #############################
 
+# Text Editor aliases
 alias vi='/usr/bin/nvim'
 alias vim='/usr/bin/nvim'
-alias open_ports='netstat -tulanp'
+
+# Network aliases
+alias openports='netstat -tulanp'
+alias pinggoogle='ping -c 5 google.com'
+alias pingdns='ping -c 5 8.8.8.8'
+alias portcheck='nc -z -v'
+alias ipconfig='ifconfig'
+alias myip='curl ifconfig.me'
+alias flushdns='sudo systemctl restart network-manager'
+alias dnsinfo='cat /etc/resolv.conf'
+alias trace='traceroute'
+alias tcpports='netstat -tln'
+alias routes='route -n'
+
+# IP aliases
 alias iptlist='sudo /sbin/iptables -L -n -v --line-numbers'
 alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
 alias iptlistout='sudo /sbin/iptables -L OUTPUT -n -v --line-numbers'
 alias iptlistfw='sudo /sbin/iptables -L FORWARD -n -v --line-numbers'
+
+# Git aliases
+alias ga='git add'
+alias gc='git commit -m'
+alias gs='git status'
+alias gl='git log --oneline'
+
+# Docker aliases
+alias dps='docker ps'
+alias dexec='docker exec -it'
+
+# Compression aliases
+alias tarc='tar -cvf'
+alias tarx='tar -xvf'
+alias gz='gzip'
+alias ungz='gunzip'
+
+# System control aliases
+alias reboot='sudo shutdown -r now'
+alias poweroff='sudo shutdown -P now'
 
 #############################
 #       ZSH COLORS          #
