@@ -34,13 +34,22 @@ Editors:
 
 ## Neovim
 
-Open neovim and install the plugins:
+Install the language servers:
 
 ```sh
 MasonInstallAll
 ```
 
-Install the elixir:
+Install treesitter parser for syntax highlighting:
+
+```sh
+TSInstall all
+```
+
+> [!WARNING]
+> This can be slow and may crash neovim.
+
+Install treesitter parser for elixir:
 
 ```sh
 TSInstall elixir

@@ -2,17 +2,14 @@
 local M = {}
 
 M.ui = {
-  theme = 'catppuccin',
+  theme = "catppuccin",
+  transparency = true,
   statusline = {
-    theme = "default",
-    separator_style = "default",
-  },
-  tabufline = {
-    lazyload = true,
-    overriden_modules = nil,
+    theme = "vscode",
+    separator_style = "arrow",
+
   },
 }
 M.plugins = 'custom.plugins'
-vim.cmd('hi Normal guibg=none ctermbg=none')
 
 return M
