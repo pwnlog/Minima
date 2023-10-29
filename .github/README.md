@@ -1,38 +1,47 @@
 # Minima
 
-The minimal version of Daku without AwesomeWM.
+The minimal version of Daku.
 
-WM:
-- BSPWM / SXHKD
+<div>
 
-Themes:
-- Colorful
-- Light 
-- Dark 
+<table align=left><tr><td>
+<b>- Operating System: </b><br />
+<b>- Window Manager: </b><br />
+<b>- Bar: </b><br />
+<b>- Application Launcher: </b><br />
+<b>- Compositor: </b><br />
+<b>- Terminal: </b><br />
+<b>- Shell: </b><br />
+<b>- Editor: </b><br />
+<b>- Wallpaper: </b><br />
+</table>
 
-Bars:
-- Daku
-- Dakura
-- Karafuru
-- Shisuru
+<table><tr><td>
+<a href="https://www.kali.org/">Kali Linux</a><br />
+<a href="https://github.com/baskerville/bspwm">BSPWM</a><br />
+<a href="https://github.com/polybar/polybar">Polybar</a><br />
+<a href="https://github.com/davatorium/rofi">Rofi</a><br />
+<a href="https://github.com/yshui/picom">Picom</a><br />
+<a href="https://alacritty.org/">Alacritty</a><br />
+<a href="https://www.zsh.org">Zsh</a><br />
+<a href="https://nvchad.com/">Neovim</a><br />
+<a href="https://github.com/derf/feh">Feh</a><br />
+</table>
+</div>
 
-Terminal:
-- Alacritty
-- Tmux
+# Documentation
 
-Launcher:
-- Rofi
-
-Editors:
-- Neovim
+Read the documentation at the [wiki](https://github.com/pwnlog/Minima/wiki) site to learn how to use this configuration.
 
 # Install
+
+Install the configuration in your host:
 
 ```sh
 ./install.sh
 ```
 
-## Neovim
+## Neovim 
 
 Install the language servers:
 

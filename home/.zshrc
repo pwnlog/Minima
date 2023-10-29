@@ -55,6 +55,19 @@ alias ungz='gunzip'
 alias reboot='sudo shutdown -r now'
 alias poweroff='sudo shutdown -P now'
 
+# List
+alias ll='lsd -lh --group-dirs=first'
+alias la='lsd -a --group-dirs=first'
+alias l='lsd --group-dirs=first'
+alias lla='lsd -lha --group-dirs=first'
+alias ls='lsd --group-dirs=first'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias shopt='/usr/bin/shopt'
+
 #############################
 #       ZSH COLORS          #
 #############################
