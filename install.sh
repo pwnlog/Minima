@@ -70,9 +70,34 @@ fi
 #********************************************************************************#
 ##################################################################################
 
-sudo apt-get install -y thunar xclip coreutils flameshot lxappearance papirus-icon-theme bat lsd
+# Install core utils
+sudo apt-get install -y thunar xclip coreutils flameshot lxappearance papirus-icon-theme 
 if [ $? != 0 ]; then
-    echo "[-] Command: $RED 'sudo apt-get install -y thunar xclip coreutils flameshot lxappearance papirus-icon-theme bat lsd' $RESET has failed"
+    echo "[-] Command: $RED 'sudo apt-get install -y thunar xclip coreutils flameshot lxappearance papirus-icon-theme' $RESET has failed"
+    exit
+fi
+
+# Install bat
+wget https://github.com/sharkdp/bat/releases/download/v0.24.0/bat_0.24.0_amd64.deb -O bat.deb
+if [ $? != 0 ]; then
+     echo "[-] Failed to download bat debian package"
+     exit
+fi
+sudo dpkg -i bat.deb
+if [ $? != 0 ]; then
+     echo "[-] Failed to install bat"
+     exit
+fi
+
+# Install lsd
+wget https://github.com/lsd-rs/lsd/releases/download/v1.0.0/lsd_1.0.0_amd64.deb -O lsd.deb
+if [ $? != 0 ]; then
+     echo "[-] Failed to download lsd package"
+     exit
+fi
+sudo dpkg -i lsd.deb
+if [ $? != 0 ]; then
+    echo "[-] Failed to install lsd"
     exit
 fi
 
@@ -190,7 +215,7 @@ fi
 cd $CWD
 
 # Install Rofi
-sudo apt install -y bison flex check libgdk-pixbuf-2.0-dev libstartup-notification0-dev libxkbcommon-dev libglib2.0-dev libxcb-xkb-dev libxkbcommon-x11-dev libxcb-cursor-dev libpango1.0-dev
+sudo apt-get install -y bison flex check libgdk-pixbuf-2.0-dev libstartup-notification0-dev libxkbcommon-dev libglib2.0-dev libxcb-xkb-dev libxkbcommon-x11-dev libxcb-cursor-dev libpango1.0-dev
 sudo apt purge rofi 2>/dev/null
 wget https://github.com/davatorium/rofi/releases/download/1.7.5/rofi-1.7.5.tar.gz -O rofi-1.7.5.tar.gz
 if [ -f "rofi-1.7.5.tar.gz" ]; then
@@ -215,33 +240,10 @@ cd $CWD
 sudo rm -rf build
 
 # Install Polybar
-sudo pip install sphinx
-sudo apt install -y build-essential git cmake cmake-data pkg-config python3-packaging libuv1-dev libcairo2-dev libxcb1-dev libxcb-util0-dev libxcb-randr0-dev libxcb-composite0-dev python3-xcbgen xcb-proto libxcb-image0-dev libxcb-ewmh-dev libxcb-icccm4-dev libpulse-dev libiw-dev libxcb-xkb-dev libxcb-xrm-dev libxcb-cursor-dev libasound2-dev libjsoncpp-dev libmpdclient-dev libnl-genl-3-dev
-sudo apt purge polybar
-wget https://github.com/polybar/polybar/releases/download/3.6.3/polybar-3.6.3.tar.gz -O polybar-3.6.3.tar.gz
-echo "f25758573567208fc7b6f4d4115a6117a87389cbcc094cf605d079775be95fa5 polybar-3.6.3.tar.gz" | sha256sum -c
+sudo apt install -y polybar
 if [ $? != 0 ]; then
-    echo -e "[-] Error: Failed to download polybar-3.6.3.tar.gz correctly!"
-    exit
+   echo "[-] Command: $RED 'sudo apt install -y polybar' $RESET has failed"
 fi
-tar -xvf polybar-3.6.3.tar.gz
-cd polybar-3.6.3
-rm -rf build 2>/dev/null
-mkdir build
-cd build
-cmake ..
-if [ $? != 0 ]; then
-    echo "[-] Command: $RED 'cmake ..' $RESET has failed"
-    exit
-fi
-make -j$(nproc)
-sudo make install
-if [ $? != 0 ]; then
-    echo "[-] Command: $RED 'sudo make install $RESET has failed"
-    exit
-fi
-cd $CWD
-sudo rm -rf build
 
 # Install Feh
 sudo apt install -y feh
