@@ -33,8 +33,15 @@ RESET=$(printf '\e[0m')
 #********************************************************************************#
 ##################################################################################
 
+# Ensure the user is not running as root
+if [ $(whoami) == 'root' ]; then
+    echo -e "[-] Error: Do NOT run this script as root!"
+    echo -e "[i] Information: Do NOT use the 'sudo' command to run this script."
+    exit
+fi
+
 # Sudo Prompt
-echo "[+] Sudo privileges required."
+echo "[+] Elevating to EUID 0 for a short period"
 sudo test
 
 # Update the system packages

@@ -41,6 +41,9 @@ Install the configuration in your host:
 ./install.sh
 ```
 
+> [!NOTE]
+> Do NOT run this script with root or sudo, please read the [wiki installation](https://github.com/pwnlog/Minima/wiki/Installation) page for more information.
+
 ## Neovim 
 
 Install the language servers:
