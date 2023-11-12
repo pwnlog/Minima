@@ -1,8 +1,8 @@
 #!/usr/bin/bash
 
 # Author: pwnlog
-# Description: Minima installer for Kali Linux
-# OS Tested: Kali Linux 2023.2
+# Description: Minima installer
+# OS Tested: Kali Linux 2023.3 and ParrotOS 5.3
 # Devices Tested: Virtual Machine
 
 ##################################################################################
@@ -78,9 +78,9 @@ fi
 ##################################################################################
 
 # Install core utils
-sudo apt-get install -y thunar xclip coreutils flameshot lxappearance papirus-icon-theme 
+sudo apt-get install -y zsh zstd thunar xclip coreutils flameshot lxappearance papirus-icon-theme 
 if [ $? != 0 ]; then
-    echo "[-] Command: $RED 'sudo apt-get install -y thunar xclip coreutils flameshot lxappearance papirus-icon-theme' $RESET has failed"
+    echo "[-] Command: $RED 'sudo apt-get install -y zsh zstd thunar xclip coreutils flameshot lxappearance papirus-icon-theme' $RESET has failed"
     exit
 fi
 
@@ -90,7 +90,7 @@ if [ $? != 0 ]; then
      echo "[-] Failed to download bat debian package"
      exit
 fi
-sudo dpkg -i bat.deb
+sudo dpkg -i bat.deb || sudo apt install -y bat
 if [ $? != 0 ]; then
      echo "[-] Failed to install bat"
      exit
@@ -100,18 +100,33 @@ fi
 wget https://github.com/lsd-rs/lsd/releases/download/v1.0.0/lsd_1.0.0_amd64.deb -O lsd.deb
 if [ $? != 0 ]; then
      echo "[-] Failed to download lsd package"
-     exit
 fi
-sudo dpkg -i lsd.deb
+sudo dpkg -i lsd.deb || sudo apt install -y lsd
 if [ $? != 0 ]; then
-    echo "[-] Failed to install lsd"
-    exit
+    echo "[+] Trying another method to install lsd"
+    ar -x lsd.deb
+    zstd -d control.tar.zst
+    zstd -d data.tar.zst
+    xz control.tar
+    xz data.tar
+    rm lsd.deb
+    ar -rc lsd.deb debian-binary control.tar.xz data.tar.xz
+    if [ $? != 0 ]; then
+        echo "[-] Failed to install lsd"
+        exit
+    fi
 fi
 
 # Install Alacritty
 wget https://github.com/barnumbirr/alacritty-debian/releases/download/v0.10.0-rc4-1/alacritty_0.10.0-rc4-1_amd64_bullseye.deb
 sudo dpkg -i alacritty_0.10.0-rc4-1_amd64_bullseye.deb
 sudo apt install -f
+
+# In case ParrotOS fails to install Alacritty with dpkg
+which alacritty
+if [ $? != 0 ]; then
+    sudo apt install -y alacritty
+fi
 
 # Install BSPWM
 sudo apt-get install -y libxcb-xinerama0-dev libxcb-icccm4-dev libxcb-randr0-dev libxcb-util0-dev libxcb-ewmh-dev libxcb-keysyms1-dev libxcb-shape0-dev
@@ -223,7 +238,7 @@ cd $CWD
 
 # Install Rofi
 sudo apt-get install -y bison flex check libgdk-pixbuf-2.0-dev libstartup-notification0-dev libxkbcommon-dev libglib2.0-dev libxcb-xkb-dev libxkbcommon-x11-dev libxcb-cursor-dev libpango1.0-dev
-sudo apt purge rofi 2>/dev/null
+sudo apt purge -y rofi 2>/dev/null
 wget https://github.com/davatorium/rofi/releases/download/1.7.5/rofi-1.7.5.tar.gz -O rofi-1.7.5.tar.gz
 if [ -f "rofi-1.7.5.tar.gz" ]; then
     echo "[+] The file rofi-1.7.5.tar.gz was downloaded."
@@ -247,10 +262,36 @@ cd $CWD
 sudo rm -rf build
 
 # Install Polybar
-sudo apt install -y polybar
+sudo pip install sphinx || sudo pip3 install sphinx
+sudo apt install -y build-essential git cmake cmake-data pkg-config python3-packaging libuv1-dev libcairo2-dev libxcb1-dev libxcb-util0-dev libxcb-randr0-dev libxcb-composite0-dev python3-xcbgen xcb-proto libxcb-image0-dev libxcb-ewmh-dev libxcb-icccm4-dev libpulse-dev libiw-dev libxcb-xkb-dev libxcb-xrm-dev libxcb-cursor-dev libasound2-dev libjsoncpp-dev libmpdclient-dev libnl-genl-3-dev
+wget https://github.com/polybar/polybar/releases/download/3.6.3/polybar-3.6.3.tar.gz -O polybar-3.6.3.tar.gz
+echo "f25758573567208fc7b6f4d4115a6117a87389cbcc094cf605d079775be95fa5 polybar-3.6.3.tar.gz" | sha256sum -c
 if [ $? != 0 ]; then
-   echo "[-] Command: $RED 'sudo apt install -y polybar' $RESET has failed"
+    echo "[-] Error: Failed to download polybar-3.6.3.tar.gz correctly!"
+    echo "[i] Removing the polybar-3.6.3.tar.gz due to invalid checksum"
+    rm polybar-3.6.3.tar.gz 
+    exit
 fi
+tar -xvf polybar-3.6.3.tar.gz
+cd polybar-3.6.3
+rm -rf build 2>/dev/null
+mkdir build
+cd build
+cmake ..
+if [ $? != 0 ]; then
+    echo "[-] Command: $RED 'cmake ..' $RESET has failed"
+    exit
+fi
+make -j$(nproc)
+sudo make install
+if [ $? != 0 ]; then
+    echo "[i] Trying another method to install polybar"
+    sudo apt install -y polybar
+    if [ $? != 0 ]; then
+        echo "[-] Command: $RED 'sudo apt install -y polybar' $RESET has failed"
+    fi
+fi
+cd $CWD
 
 # Install Feh
 sudo apt install -y feh
@@ -260,7 +301,7 @@ if [ $? != 0 ]; then
 fi
 
 # Install latest neovim
-sudo apt purge neovim 2>/dev/null
+sudo apt purge -y neovim 2>/dev/null
 sudo apt-get -y install ninja-build gettext cmake unzip curl
 git clone https://github.com/neovim/neovim
 cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo
@@ -341,11 +382,9 @@ sudo apt install -y libimlib2-dev
 if [ $? != 0 ]; then
     echo "[-] Command: $RED 'sudo apt install -y libimlib2-dev' $RESET has failed"
     echo -e "\n\n\n"
-    echo "$BLUE [!] User interaction required, please read the TROUBLESHOOTING.md file for more information $RESET"
+    echo "$BLUE [!] User interaction might be required $RESET"
     echo -e "\n\n\n"
-    sudo aptitude install libdeflate0
-    sudo aptitude install libdeflate-dev
-    sudo aptitude install libimlib2-dev
+    sudo aptitude install -y libdeflate0 libdeflate-dev libimlib2-dev
 fi  
 sudo apt-get install -y libexif-dev
 if [ $? != 0 ]; then
@@ -360,7 +399,7 @@ cd $CWD
 
 # Install Pywal
 sudo apt install -y imagemagick
-sudo pip3 install pywal --break-system-packages
+sudo pip3 install pywal --break-system-packages || sudo pip install pywal
 if [ $? != 0 ]; then
     echo -e "[-] Error: Failed to install pywal!"
     exit

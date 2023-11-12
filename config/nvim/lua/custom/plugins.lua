@@ -31,6 +31,39 @@ local plugins = {
     priority = 1000,
     opts = {},
   },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        -- defaults 
+        "vim",
+        "lua",
+
+        -- must have
+        "bash",
+        "python",
+        "lua",
+        "perl",
+        "ruby",
+        "go",
+        "rust",
+
+        -- web dev 
+        "html",
+        "css",
+        "javascript",
+        "typescript",
+        "tsx",
+        "json",
+
+       -- low level
+        "nasm",
+        "c",
+        "cpp",
+        "zig"
+      },
+    },
+  },
 }
 
 return plugins

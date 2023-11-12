@@ -5,7 +5,6 @@ The minimal version of Daku.
 <div>
 
 <table align=left><tr><td>
-<b>- Operating System: </b><br />
 <b>- Window Manager: </b><br />
 <b>- Bar: </b><br />
 <b>- Application Launcher: </b><br />
@@ -17,7 +16,6 @@ The minimal version of Daku.
 </table>
 
 <table><tr><td>
-<a href="https://www.kali.org/">Kali Linux</a><br />
 <a href="https://github.com/baskerville/bspwm">BSPWM</a><br />
 <a href="https://github.com/polybar/polybar">Polybar</a><br />
 <a href="https://github.com/davatorium/rofi">Rofi</a><br />
@@ -61,8 +59,8 @@ TSInstall all
 > [!WARNING]
 > This can be slow and may crash neovim.
 
-Install treesitter parser for elixir:
+Install treesitter parser for some languages:
 
 ```sh
-TSInstall elixir
+TSInstall elixir bash python rust go lua perl
 ```
