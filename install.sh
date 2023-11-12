@@ -63,7 +63,7 @@ sudo mkswap /swapfile
 sudo swapon /swapfile
 
 # WM
-sudo apt-get install -y wmctrl
+sudo apt-get install -y wmctrl aptitude
 if [ $? != 0 ]; then
     echo "[-] Command: $RED 'sudo apt-get install -y wmctrl' $RESET has failed"
     exit
