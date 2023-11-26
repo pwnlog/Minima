@@ -29,6 +29,11 @@ alias trace='traceroute'
 alias tcpports='netstat -tln'
 alias routes='route -n'
 
+## Internet Connections
+alias ic="sudo netstat -natup"
+## Listening Connections
+alias lc="sudo ss -ntulp"
+
 # IP aliases
 alias iptlist='sudo /sbin/iptables -L -n -v --line-numbers'
 alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
