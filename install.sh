@@ -424,6 +424,9 @@ cd $CWD
 # Disable Tmux theme
 sed -ie 's/tmux_conf_theme=enabled/tmux_conf_theme=disabled/g' $HOME/.tmux.conf.local
 
+# Install fzf
+sudo apt install -y fzf
+
 ##################################################################################
 #********************************************************************************#
 ##################################################################################
@@ -445,6 +448,14 @@ cp $CWD/home/.p10k.zsh ~/
 xmodmap ~/.xmodmaprc
 
 # Zsh Plugins
+git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-zsh-plugin
+if [ -d "~/.oh-my-zsh/custom/plugins/fzf-zsh-plugin/" ]
+then
+    echo "~/.oh-my-zsh/custom/plugins/fzf-zsh-plugin/ found."
+else
+    exit 1
+fi
+
 if [ -d "/usr/share/zsh-autosuggestions" ]
 then
     echo "/usr/share/zsh-autosuggestions found."

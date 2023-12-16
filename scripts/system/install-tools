@@ -9,18 +9,11 @@ curl -sSL https://install.python-poetry.org | python3 -
 poetry self update
 pip install --upgrade pip
 sudo apt install -y pipx 
-
-# CrackMapExec
-sudo apt purge -y crackmapexec 2>/dev/null
-apt-get install -y libssl-dev libffi-dev python-dev-is-python3 build-essential
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-pip install setuptools_rust
-git clone https://github.com/Porchetta-Industries/CrackMapExec
-cd CrackMapExec
-poetry install
-poetry run crackmapexec
-cd ..
 '
+
+# Install NetExec
+pipx ensurepath
+pipx install git+https://github.com/Pennyw0rth/NetExec
 
 # Install Go
 wget https://go.dev/dl/go1.19.5.linux-amd64.tar.gz -O go1.19.5.linux-amd64.tar.gz

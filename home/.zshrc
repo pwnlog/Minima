@@ -12,6 +12,10 @@ precmd_functions+=(_fix_cursor)
 #      MUST HAVE ALIAS      #
 #############################
 
+# Python (requires pyenv)
+alias py3='pyenv global 3.11'
+alias py2='pyenv global 2.7.18'
+
 # Text Editor aliases
 alias vi='/usr/bin/nvim'
 alias vim='/usr/bin/nvim'
@@ -101,6 +105,7 @@ fi
 #         PLUGINS           #
 #############################
 
+source ~/.oh-my-zsh/custom/plugins/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 
 source /usr/share/zsh-completions/zsh-completions.plugin.zsh
@@ -335,13 +340,12 @@ function xp() {
     file="$1"
     if [[ -f "$file" ]]; then
         ports=$(grep -oP '[0-9]+(?=/open)' "$file" | paste -sd ",")
+        printf "[+] Open ports: %s\n" "$ports"
+        printf "%s" "$ports" | xclip -sel clip
+        printf "[+] Ports copied to clipboard\n"
     else
         echo "[-] Error: File '$file' does not exist."
-        exit 1
     fi
-    printf "[+] Open ports: %s\n" "$ports"
-    printf "%s" "$ports" | xclip -sel clip
-    printf "[+] Ports copied to clipboard\n"
 }
 
 function mk() {
@@ -350,7 +354,9 @@ function mk() {
 
 function os() {
     ttl=$(ping -c 1 -W 1 $1 | sed -n 's/^.*ttl=\([[:digit:]]*\).*$/\1/p')
-    if (( $ttl <= 64 )); then
+    if [[ "$ttl" == "" ]]; then
+        printf 'OS: Offline\n'
+    elif (( $ttl <= 64 )); then
         printf 'OS: Unix/Linux\n'
     elif (( $ttl <= 128 )); then
         printf 'OS: Windows\n'
