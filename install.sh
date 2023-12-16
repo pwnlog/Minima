@@ -449,9 +449,9 @@ xmodmap ~/.xmodmaprc
 
 # Zsh Plugins
 git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-zsh-plugin
-if [ -d "~/.oh-my-zsh/custom/plugins/fzf-zsh-plugin/" ]
+if [ -d "$HOME/.oh-my-zsh/custom/plugins/fzf-zsh-plugin/" ]
 then
-    echo "~/.oh-my-zsh/custom/plugins/fzf-zsh-plugin/ found."
+    echo "$HOME/.oh-my-zsh/custom/plugins/fzf-zsh-plugin/ found."
 else
     exit 1
 fi
