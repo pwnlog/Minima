@@ -1,5 +1,6 @@
 /* POWER MENU */
 
+// Main configuration
 configuration {
 	font:							"Iosevka Nerd Font 10";
     show-icons:                     true;
@@ -14,9 +15,9 @@ configuration {
 
 @import "colors.rasi"
 
+// Window
 window {
     transparency:                   "real";
-    //background-color:               @background;
     text-color:                     @foreground;
 	border:							0px;
 	border-color:					@background;
@@ -28,6 +29,7 @@ window {
     y-offset:                       0;
 }
 
+// Main prompt
 prompt {
     enabled: 						true;
 	padding: 						12px 15px 12px 15px;
@@ -35,6 +37,7 @@ prompt {
 	text-color: 					@foreground;
 }
 
+// Textbox prompt
 textbox-prompt-colon {
 	padding: 						11px 15px 10px 15px;
 	font:							"Iosevka Nerd Font 10";
@@ -44,6 +47,7 @@ textbox-prompt-colon {
 	str: "";
 }
 
+// Input bar
 inputbar {
 	children: 						[ textbox-prompt-colon, prompt ];
     background-color:               @background;
@@ -55,9 +59,9 @@ inputbar {
     spacing:                        0px;
 }
 
+// List
 listview {
     background-color:               @background;
-    //padding:                        0px 5px 5px 0px;
     columns:                        1;
     lines:                          4;
     spacing:                        5px;
@@ -66,6 +70,7 @@ listview {
     layout:                         vertical;
 }
 
+// Mainbox
 mainbox {
     background-color:               @background;
 	border:							0px;
@@ -109,7 +114,4 @@ element selected {
 	border:							5px;
     border-radius:                  5px;
     border-color:                  	@primary;
-    //background-color:               @primary;
-    //inherit:                        @element-icon;
-    //text-color:                     @primary;
 }

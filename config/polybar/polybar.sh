@@ -5,11 +5,8 @@ dir="$HOME/.config/polybar"
 launch_bar(){
     killall -q polybar
     while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
-    
-    # bspwm
     bspc config top_padding 0 2>/dev/null
     bspc config bottom_padding 0 2>/dev/null
-
     polybar -r -q main -c "$dir/$theme/config.ini" & 2>/dev/null
 }
 

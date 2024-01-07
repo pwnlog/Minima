@@ -1,5 +1,6 @@
 /* LAUNCHER */
 
+// Main configuration
 configuration {
 	font:							"Iosevka Nerd Font 10";
     modi:                           "window,run,ssh,drun";
@@ -15,9 +16,8 @@ configuration {
 
 @import "colors.rasi"
 
+// Window 
 window {
-    //transparency:                   "real";
-    //background-color:               @background;
     text-color:                     @foreground;
 	border:							0px;
 	border-color:					@background-alt;
@@ -73,8 +73,8 @@ listview {
     layout:                         vertical;
 }
 
+// Box 
 mainbox {
-    //background-color:               @primary;
 	border:							0px;
     border-radius:                  0px;
 	border-color:					#AAAAAA;
@@ -114,7 +114,4 @@ element selected {
 	border:							5px;
     border-radius:                  5px;
     border-color:                  	@primary;
-    //background-color:               @primary;
-    //inherit:                        @element-icon;
-    //text-color:                     @primary;
 }

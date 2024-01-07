@@ -262,7 +262,7 @@ cd $CWD
 sudo rm -rf build
 
 # Install Polybar
-sudo pip install sphinx || sudo pip3 install sphinx
+pip install sphinx || pip3 install sphinx
 sudo apt install -y build-essential git cmake cmake-data pkg-config python3-packaging libuv1-dev libcairo2-dev libxcb1-dev libxcb-util0-dev libxcb-randr0-dev libxcb-composite0-dev python3-xcbgen xcb-proto libxcb-image0-dev libxcb-ewmh-dev libxcb-icccm4-dev libpulse-dev libiw-dev libxcb-xkb-dev libxcb-xrm-dev libxcb-cursor-dev libasound2-dev libjsoncpp-dev libmpdclient-dev libnl-genl-3-dev
 wget https://github.com/polybar/polybar/releases/download/3.6.3/polybar-3.6.3.tar.gz -O polybar-3.6.3.tar.gz
 echo "f25758573567208fc7b6f4d4115a6117a87389cbcc094cf605d079775be95fa5 polybar-3.6.3.tar.gz" | sha256sum -c
@@ -399,7 +399,7 @@ cd $CWD
 
 # Install Pywal
 sudo apt install -y imagemagick
-sudo pip3 install pywal --break-system-packages || sudo pip install pywal
+pip3 install pywal --break-system-packages || pip install pywal
 if [ $? != 0 ]; then
     echo -e "[-] Error: Failed to install pywal!"
     exit
@@ -626,14 +626,31 @@ echo "" > ~/.config/target
 mkdir -p ~/Pictures/Wallpapers 
 cp $CWD/wallpaper/* ~/Pictures/Wallpapers 
 
-# Fix wallpaper for other usernames
+# Edit wallpaper for other usernames
 sed -ie "s/kali/$USER/g" ~/.fehbg
 
-# Fix thunar
+# Edit thunar
 sed -ie "s/kali/$USER/g" ~/.config/gtk-3.0/bookmarks
 
 # Generate wal cache
 wal -i "$HOME/Pictures/Wallpapers/pwning.png" -q -n
+
+##################################################################################
+#********************************************************************************#
+##################################################################################
+#                              PYENV SECTION                                     #
+##################################################################################
+#********************************************************************************#
+##################################################################################
+
+sudo apt install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python3-openssl git
+curl https://pyenv.run | bash
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init --path)"\nfi' >> ~/.zshrc
+$HOME/.pyenv/bin/pyenv install 2.7.18
+$HOME/.pyenv/bin/pyenv install 3.11
+$HOME/.pyenv/bin/pyenv versions
 
 ##################################################################################
 #********************************************************************************#

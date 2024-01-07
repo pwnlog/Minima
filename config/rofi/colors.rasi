@@ -1,5 +1,6 @@
 /* COLORS */
 
+// Main colors
 * {
 	background:    		#14181d;
 	background-alt:   	#1e252c;
