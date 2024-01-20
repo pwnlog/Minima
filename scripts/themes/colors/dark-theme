@@ -1,0 +1,74 @@
+#!/usr/bin/bash
+
+if [[ ! -z $(ps -efww | grep -vE "grep|launch.sh|scripts" | grep "daku/config.ini" | awk -vpid=$$ '$2 != pid { print $2 }') ]]; then
+	POLYBAR="$HOME/.config/polybar/daku/colors.ini"
+fi 
+
+if [[ ! -z $(ps -efww | grep -vE "grep|launch.sh|scripts" | grep "dakura/config.ini" | awk -vpid=$$ '$2 != pid { print $2 }') ]]; then
+	POLYBAR="$HOME/.config/polybar/dakura/colors.ini"
+fi
+
+if [[ ! -z $(ps -efww | grep -vE "grep|launch.sh|scripts" | grep "shisuru" | awk -vpid=$$ '$2 != pid { print $2 }') ]]; then
+	POLYBAR="$HOME/.config/polybar/shisuru/colors.ini"
+fi
+
+if [[ ! -z $(ps -efww | grep -vE "grep|launch.sh|scripts" | grep "karafuru" | awk -vpid=$$ '$2 != pid { print $2 }') ]]; then
+	POLYBAR="$HOME/.config/polybar/karafuru/colors.ini"
+fi
+
+ROFI="$HOME/.config/rofi/colors.rasi"
+alacritty="$HOME/.config/alacritty/alacritty.yml"
+ZSHRC="$HOME/.zshrc"
+
+# Dark theme
+BG='#1e252c'
+FG='#C5C8C6'
+FGA='#C5C8C6'
+BGT='#14181d'
+COLOR1='#8ca1a5'
+COLOR2='#14181d'
+COLOR3='#A54242'
+COLOR4='#707880'
+
+# Polybar
+sed -i -e "s/background = #.*/background = $BGT/g" $POLYBAR
+sed -i -e "s/background-alt = #.*/background-alt = $BG/g" $POLYBAR
+sed -i -e "s/foreground = #.*/foreground = $FGA/g" $POLYBAR
+sed -i -e "s/primary = #.*/primary = $COLOR1/g" $POLYBAR
+sed -i -e "s/secondary = #.*/secondary = $COLOR2/g" $POLYBAR
+sed -i -e "s/alert = #.*/alert = $COLOR3/g" $POLYBAR
+sed -i -e "s/disabled = #.*/disabled = $COLOR4/g" $POLYBAR
+
+# Rofi
+cat > $ROFI <<- EOF
+/* COLORS */
+
+* {
+background:         ${BG};
+background-alt:     ${BGT};
+foreground:         #FFFFFF;
+primary:            ${COLOR2};
+secondary:          ${COLOR1};
+alert:              ${COLOR3};
+disabled:           ${COLOR4};
+}
+EOF
+
+# BSPWM
+bspc config normal_border_color $COLOR1
+bspc config focused_border_color $COLOR2
+bspc config active_border_color $COLOR3
+bspc config presel_feedback_color $COLOR2
+
+# Alacritty
+ALA=$(echo $COLOR1 | cut -d "#" -f 2)
+sed -i -e "s/background: '0x*'/background: '0x$ALA'/g" $alacritty
+
+# Disable zsh colors async
+if ! grep -q "^#(/usr/bin/cat ~/.cache/wal/sequences \&)$" $ZSHRC; then
+	sed -ie "s|^(/usr/bin/cat ~/.cache/wal/sequences \&)|#(/usr/bin/cat ~/.cache/wal/sequences \&)|g" $ZSHRC
+fi
+
+if ! grep -q "^#source ~/.cache/wal/colors-tty.sh" $ZSHRC; then
+	sed -ie "s|^source ~/.cache/wal/colors-tty.sh|#source ~/.cache/wal/colors-tty.sh|g" $ZSHRC
+fi

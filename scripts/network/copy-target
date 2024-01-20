@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo -n $(cat ~/.config/target) | xclip -sel clipboard

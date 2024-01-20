@@ -1,0 +1,18 @@
+#!/usr/bin/bash
+
+BSPWM="$HOME/.config/bspwm/bspwmrc"
+
+if ! grep -q "\#\/usr\/local\/bin\/colorful-theme" $BSPWM; then
+	sed -ie "s|\/usr\/local\/bin\/colorful-theme|\#\/usr\/local\/bin\/colorful-theme|g" $BSPWM
+fi
+if ! grep -q "\#\/usr\/local\/bin\/light-theme" $BSPWM; then
+	sed -ie "s|\/usr\/local\/bin\/light-theme|\#\/usr\/local\/bin\/light-theme|g" $BSPWM
+fi
+
+if [[ "$DESKTOP_SESSION" == *"bspwm"* ]]; then
+	echo "[+] Detected BSPWM"
+	/usr/local/bin/dark-theme
+	bspc wm -r
+else
+	echo "[i] BSPWM was not detected"
+fi

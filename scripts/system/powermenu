@@ -1,0 +1,76 @@
+#!/usr/bin/bash
+
+dir="~/.config/rofi/"
+uptime=$(uptime -p | sed -e 's/up //g')
+
+rofi_command="rofi -theme $dir/powermenu.rasi"
+shutdown=" Shutdown"
+restrt=" Restart"
+lock=" Lock"
+duerme=" Sleep"
+log_out=" Logout"
+
+confirm_exit() {
+	rofi -dmenu\
+		-i\
+		-no-fixed-num-lines\
+		-p "Are You Sure? : "\
+		-theme $dir/confirm.rasi
+}
+
+mensaje() {
+	rofi -theme "$dir/message.rasi" -e "Available Options  -  yes / y / no / n"
+}
+
+options="$lock\n$log_out\n$duerme\n$restrt\n$shutdown"
+
+chosen="$(echo -e "$options" | $rofi_command -p "Uptime: $uptime" -dmenu -selected-row 0)"
+case $chosen in
+	$shutdown)
+		ans=$(confirm_exit &)
+		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
+			systemctl poweroff || shutdown -h now
+		elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
+			exit 0
+		else
+			mensaje
+		fi
+		;;
+	$restrt)
+		ans=$(confirm_exit &)
+		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
+			systemctl reboot || reboot
+		elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
+			exit 0
+		else
+			mensaje
+		fi
+		;;
+	$lock)
+		if [[ -f /usr/bin/i3lock-fancy ]]; then
+			/usr/bin/i3lock-fancy
+		else
+			screen_locker --fork
+		fi
+		;;
+	$duerme)
+		ans=$(confirm_exit &)
+		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
+			systemctl suspend
+		elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
+			exit 0
+	   else
+			mensaje
+		fi
+		;;
+	$log_out)
+		ans=$(confirm_exit &)
+		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
+			bspc quit
+		elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
+			exit 0
+		else
+			mensaje
+		fi
+		;;
+esac

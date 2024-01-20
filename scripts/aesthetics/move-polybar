@@ -1,0 +1,73 @@
+#!/usr/bin/bash
+
+if [[ ! -z $(ps -efww | grep -vE "grep|launch.sh|scripts" | grep "daku/config.ini" | awk -vpid=$$ '$2 != pid { print $2 }') ]]; then
+	STYLE="daku"
+fi 
+
+if [[ ! -z $(ps -efww | grep -vE "grep|launch.sh|scripts" | grep "dakura/config.ini" | awk -vpid=$$ '$2 != pid { print $2 }') ]]; then
+	STYLE="dakura"
+fi
+
+if [[ ! -z $(ps -efww | grep -vE "grep|launch.sh|scripts" | grep "shisuru" | awk -vpid=$$ '$2 != pid { print $2 }') ]]; then
+	STYLE="shisuru"
+fi
+
+if [[ ! -z $(ps -efww | grep -vE "grep|launch.sh|scripts" | grep "karafuru" | awk -vpid=$$ '$2 != pid { print $2 }') ]]; then
+	STYLE="karafuru"
+fi
+
+POLY="$HOME/.config/polybar/$STYLE/config.ini"
+
+top() {
+	if cat $POLY | grep -q -E 'bottom = true'; then
+		sed -i -e "s/bottom = true/bottom = false/g" $POLY
+		bspc config bottom_padding 0
+		echo "[+] Polybar changed to top!"
+	fi
+	killall polybar 2>/dev/null
+	$HOME/.config/polybar/polybar.sh "--$STYLE"
+}
+
+bottom() {
+	if cat $POLY | grep -q -E 'bottom = false'; then
+		sed -i -e "s/bottom = false/bottom = true/g" $POLY
+		bspc config top_padding 0
+		echo "[+] Polybar changed to bottom!"
+	fi
+	killall polybar 2>/dev/null
+	$HOME/.config/polybar/polybar.sh "--$STYLE"
+}
+
+print_help() {
+	echo "Usage: move-polybar [--top] [--bottom]"
+	echo "--top: Set the polybar at the top of the screen."
+	echo "--bottom: Set the polybar at the bottom of the screen."
+}
+
+while true
+	do if [ $# -gt 0 ]
+		then case $1 in
+			--top*)
+				top
+				exit 0
+				;;
+			--bottom*)
+				bottom
+				exit 0
+			;;
+			--help*)
+				print_help
+				exit 1
+			;;
+			*)
+				print_help
+				exit 1
+			;;	
+			esac
+	else
+		print_help
+		exit 2
+	fi
+done
+
+kill $$ > /dev/null 2>&1

@@ -1,0 +1,72 @@
+#!/bin/bash
+
+video_path="$2"
+video_extensions=("mp4" "avi" "mkv" "mov" "wmv")
+file_extension="${video_path##*.}"
+
+start(){
+	if [ ${#pid} -gt 0 ] ; then
+		stop
+	fi
+
+	if [[ " ${video_extensions[@]} " =~ " ${file_extension} " ]]; then
+		echo "[+] The file is a video"
+	else
+		echo "[-] The file is not a video"
+		exit 1
+	fi
+
+	video_width=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=s=x:p=0 "${video_path}")
+	video_height=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=s=x:p=0 "${video_path}")
+
+	echo "[i] The video display resolution is:"
+	echo -e "\t[i] Video width: ${video_width}"
+	echo -e "\t[i] Video height: ${video_height}"
+
+	display_info=$(xdpyinfo | awk '/dimensions:/ {print $2}')
+
+	width=$(echo "$display_info" | cut -d 'x' -f 1)
+	height=$(echo "$display_info" | cut -d 'x' -f 2)
+
+	echo "[i] The current display resolution is:"
+	echo -e "\t[i] Display width: ${width}"
+	echo -e "\t[i] Display height: ${height}"
+
+	video_x=0
+	video_y=0
+
+	video_opacity=0.5
+
+	SCREENS=`xrandr | grep " connected\|\*" | pcregrep -o1 '([0-9]{1,}[x]{1,1}[0-9+]{1,}) \('`
+	for item in $SCREENS
+	do
+		xwinwrap -g "$item" -un -fdt -ni -b -nf -- mpv --hwdec=vdpau -vo x11 --no-audio --no-border --no-config --no-window-dragging --no-input-default-bindings --no-osd-bar --no-sub --loop -wid WID ${video_path} > /dev/null 2>&1 &
+		if [ $? != 0 ]; then
+			xwinwrap -g "$item" -un -fdt -ni -b -nf -- mpv --hwdec=vdpau -vo x11 --no-audio --no-border --no-config --no-window-dragging --no-input-default-bindings --no-osd-bar --no-sub --loop -wid %WID ${video_path} > /dev/null 2>&1 &
+		fi
+	done
+}
+
+stop(){
+	killall xwinwrap > /dev/null 2>&1
+}
+
+print_help() {
+	echo "Usage: ./$name.sh [--start] [--stop] \"video_path.mp4\""
+	echo "--start Start playback of video file."
+	echo "--stop Stop active playback."
+}
+
+if [ $# = 0 ]
+	then print_help
+		exit 1
+fi
+
+while [[ "$#" -gt 0 ]]; do
+	case $1 in
+		--start) start; shift ;;
+		--stop) stop; shift ;;
+		*) echo "Unknown parameter: $1" ;;
+	esac
+	shift
+done

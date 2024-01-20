@@ -1,0 +1,10 @@
+#!/bin/bash
+
+interface=$(ip link | awk '/state UP/ {print $2}' | tr -d : | head -n 1)
+ether=$(ip a s $interface | grep -Eo 'inet [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | cut -d ' ' -f2)
+
+if [ "$interface" != "" ]; then
+	echo "$ether"
+else
+	echo "ETH OFF"
+fi

@@ -1,0 +1,38 @@
+#!/usr/bin/bash
+
+BSPWM=~/.config/bspwm/bspwmrc
+PREVIOUS=$(cat $BSPWM | grep "^~/.config" | cut -d " " -f 2 | sed 's/--//g')
+THEME=$1
+
+function help_menu(){
+	echo "Usage: default-polybar <theme name>"
+	echo "[i] The available themes are the following:"
+	echo -e "daku\ndakura\nshisuru\nkarafuru"
+}
+
+if [ -z $1 ]; then
+	help_menu
+	exit 1
+fi
+
+if [[ ! "$THEME" =~ ^(daku|dakura|shisuru|karafuru)$ ]]; then
+	echo "[-] Invalid theme: $THEME"
+	echo "[i] The valid themes are the following:"
+	echo -e "daku\ndakura\nshisuru\nkarafuru"
+	exit 1
+elif [[ "$THEME" == "$PREVIOUS" ]]; then
+	echo "[i] You're already running this polybar theme: $THEME"
+	exit 1
+else
+	echo "[i] The previous theme name: $PREVIOUS"
+	echo "[+] Applying the polybar theme: $THEME"
+	sed -ie "s/$PREVIOUS/$THEME/g" $BSPWM
+	if [[ "$DESKTOP_SESSION" == "bspwm" ]]; then
+		echo "[+] Restarting BSPWM"
+		killall polybar 2>/dev/null
+		bspc wm -r
+	elif [[ "$DESKTOP_SESSION" == "awesome" ]]; then
+		echo "[+] Restarting AwesomeWM"
+		echo 'awesome.restart()' | awesome-client
+	fi
+fi

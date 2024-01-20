@@ -1,0 +1,49 @@
+#! /bin/bash
+
+if [[ ! -z $(ps -efww | grep -vE "grep|launch.sh|scripts" | grep "daku/config.ini" | awk -vpid=$$ '$2 != pid { print $2 }') ]]; then
+	POLYBAR="$HOME/.config/polybar/daku/colors.ini"
+fi 
+
+if [[ ! -z $(ps -efww | grep -vE "grep|launch.sh|scripts" | grep "dakura/config.ini" | awk -vpid=$$ '$2 != pid { print $2 }') ]]; then
+	POLYBAR="$HOME/.config/polybar/dakura/colors.ini"
+fi
+
+if [[ ! -z $(ps -efww | grep -vE "grep|launch.sh|scripts" | grep "shisuru" | awk -vpid=$$ '$2 != pid { print $2 }') ]]; then
+	POLYBAR="$HOME/.config/polybar/shisuru/colors.ini"
+fi
+
+if [[ ! -z $(ps -efww | grep -vE "grep|launch.sh|scripts" | grep "karafuru" | awk -vpid=$$ '$2 != pid { print $2 }') ]]; then
+	POLYBAR="$HOME/.config/polybar/karafuru/colors.ini"
+fi
+
+WALLS=(~/Pictures/Wallpapers/*)
+
+function select_wallpaper() {
+	WALLPAPER=$(printf "%s\n" "${WALLS[RANDOM % ${#WALLS[@]}]}")
+}
+
+PREVIOUS=$(cat /dev/shm/PREVIOUS.txt 2>/dev/null) 
+
+while [[ "$WALLPAPER" == "$PREVIOUS" || "$WALLPAPER" == "" ]]
+do
+	select_wallpaper
+done
+
+echo $WALLPAPER > /dev/shm/PREVIOUS.txt
+killall feh 2>/dev/null
+
+cat $POLYBAR | grep 'background = #14181d' || cat $POLYBAR | grep 'background = #F2F3F4' || cat $POLYBAR | grep 'background = #FFAFAF'
+if [ $? == 0 ]; then
+	feh --bg-fill $WALLPAPER
+else
+	/usr/local/bin/pywal $WALLPAPER
+	feh --bg-fill "$(< "${HOME}/.cache/wal/wal")"
+fi
+
+if ! pgrep -f polybar; then
+    echo "[i] polybar is not running, launching..."
+    VAR=$(grep -F '~/.config/polybar/polybar' ~/.config/bspwm/bspwmrc)
+    bash -c "$VAR"
+else
+    echo "[+] polybar is already running"
+fi
