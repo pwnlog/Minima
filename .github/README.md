@@ -64,7 +64,9 @@ Read the documentation at the [wiki](https://github.com/pwnlog/Minima/wiki) site
 <b>Colorful Preview</b>
 
 <img src="assets/gifs/change-colors.gif" width="500px" alt="colorful preview"></a>
+
 </div>
+
 > [!NOTE]
 > The **colorful theme** applies the colors of the wallpaper to the system UI
 
@@ -84,12 +86,10 @@ Read the documentation at the [wiki](https://github.com/pwnlog/Minima/wiki) site
 
 > [!NOTE]
 > The **bars** can be moved to the `top` or `bottom` of the screen.
+> If the **colorful theme** is enabled then the bars will use the colors of the wallpaper.
 
 <div align="center">
 <b>Bar Themes</b>
-
-> [!NOTE]
-> If the **colorful theme** is enabled then the bars will use the colors of the wallpaper.
 
 Light Daku bar:
 
