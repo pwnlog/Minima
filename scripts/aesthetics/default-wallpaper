@@ -26,7 +26,7 @@ while [ ! -z "$1" ]; do
   case "$1" in
 	--set|-s)
 		shift
-		default_wallpaper $1
+		default_wallpaper "$1"
 		;;
 	*)
 		help_menu

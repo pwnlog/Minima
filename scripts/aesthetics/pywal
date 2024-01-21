@@ -61,6 +61,15 @@ apply_colors() {
 	
 	# Polybar restart
 	polybar-msg cmd restart
+
+	# Ensure polybar runs
+	if ! pgrep -f polybar; then
+		echo "[i] polybar is not running, launching..."
+		VAR=$(grep -F '~/.config/polybar/polybar' ~/.config/bspwm/bspwmrc)
+		bash -c "$VAR"
+	else
+		echo "[+] polybar is already running"
+	fi
 }
 
 if [[ -x "`which wal`" ]]; then

@@ -40,12 +40,15 @@ set_wallpaper(){
 
 	cat $POLYBAR | grep 'background = #14181d' || cat $POLYBAR | grep 'background = #F2F3F4' || cat $POLYBAR | grep 'background = #FFAFAF'
 	if [ $? == 0 ]; then
-		killall feh
-		feh --bg-fill $1
+		killall feh 2>/dev/null
+		feh --bg-fill "$1"
 	else
-		killall feh
-		/usr/local/bin/pywal $1
+		killall feh 2>/dev/null
+		/usr/local/bin/pywal "$1"
 		feh --bg-fill "$(< "${HOME}/.cache/wal/wal")"
+		if [ $? != 0 ]; then
+			feh --bg-fill "$1"
+		fi
 	fi
 
 	if ! pgrep -f polybar; then

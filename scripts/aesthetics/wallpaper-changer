@@ -34,10 +34,13 @@ killall feh 2>/dev/null
 
 cat $POLYBAR | grep 'background = #14181d' || cat $POLYBAR | grep 'background = #F2F3F4' || cat $POLYBAR | grep 'background = #FFAFAF'
 if [ $? == 0 ]; then
-	feh --bg-fill $WALLPAPER
+	feh --bg-fill "$WALLPAPER"
 else
-	/usr/local/bin/pywal $WALLPAPER
+	/usr/local/bin/pywal "$WALLPAPER"
 	feh --bg-fill "$(< "${HOME}/.cache/wal/wal")"
+	if [ $? != 0 ]; then
+		feh --bg-fill "$WALLPAPER"
+	fi
 fi
 
 if ! pgrep -f polybar; then

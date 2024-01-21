@@ -27,9 +27,127 @@ A minimalistic pentesting setup.
 </table>
 </div>
 
+# Table of Contents
+
+- [Documentation](#documentation)
+- [Themes](#themes)
+- [Gallery](#gallery)
+- [Install](#install)
+
 # Documentation
 
 Read the documentation at the [wiki](https://github.com/pwnlog/Minima/wiki) site to learn how to use this configuration.
+
+# Themes
+
+<div align="center">
+<b>Colorful Theme / Wallpapers Colors</b>
+
+<img src="assets/img/colorful-theme.png" width="500px" alt="colorful preview"></a>
+</div>
+
+<div align="center">
+<b>Light Theme</b>
+
+<img src="assets/img/light-theme.png" width="500px" alt="colorful preview"></a>
+</div>
+
+<div align="center">
+<b>Dark Theme</b>
+
+<img src="assets/img/dark-theme.png" width="500px" alt="colorful preview"></a>
+</div>
+
+# Gallery
+
+<div align="center">
+<b>Colorful Preview</b>
+
+<img src="assets/gifs/change-colors.gif" width="500px" alt="colorful preview"></a>
+</div>
+> [!NOTE]
+> The **colorful theme** applies the colors of the wallpaper to the system UI
+
+<div align="center">
+<b>Animated Wallpapers</b>
+
+<img src="assets/gifs/video.gif" width="500px" alt="colorful preview"></a>
+
+</div>
+
+<div align="center">
+<b>Multiple Bars</b>
+
+<img src="assets/gifs/default-polybar.gif" width="500px" alt="colorful preview"></a>
+
+</div>
+
+> [!NOTE]
+> The **bars** can be moved to the `top` or `bottom` of the screen.
+
+<div align="center">
+<b>Bar Themes</b>
+
+> [!NOTE]
+> If the **colorful theme** is enabled then the bars will use the colors of the wallpaper.
+
+Light Daku bar:
+
+<img src="assets/img/light-theme-daku.png" width="500px" alt="light theme daku"></a>
+
+Light Dakura bar:
+
+<img src="assets/img/light-theme-dakura.png" width="500px" alt="light theme dakura"></a>
+
+Light Karafuru bar:
+
+<img src="assets/img/light-theme-karafuru.png" width="500px" alt="light theme karafuru"></a>
+
+Light Shisuru bar:
+
+<img src="assets/img/light-theme.png" width="500px" alt="light theme karafuru"></a>
+
+Dark Daku bar:
+
+<img src="assets/img/dark-theme-daku.png" width="500px" alt="light theme daku"></a>
+
+Dark Dakura bar:
+
+<img src="assets/img/dark-theme-dakura.png" width="500px" alt="light theme dakura"></a>
+
+Dark Karafuru bar:
+
+<img src="assets/img/dark-theme-karafuru.png" width="500px" alt="light theme karafuru"></a>
+
+Dark Shisuru bar:
+
+<img src="assets/img/dark-theme.png" width="500px" alt="light theme karafuru"></a>
+
+</div>
+
+<div align="center">
+<b>Change Corners</b>
+
+<img src="assets/gifs/change-corners.gif" width="500px" alt="colorful preview"></a>
+
+</div>
+
+<div align="center">
+<b>Change Wallpapers</b>
+
+<img src="assets/gifs/change-wallpaper.gif" width="500px" alt="colorful preview"></a>
+
+</div>
+
+<div align="center">
+<b>Wallpapers Selector</b>
+
+<img src="assets/gifs/wallpaper-selector.gif" width="500px" alt="colorful preview"></a>
+
+</div>
+
+> [!NOTE]
+> Additional information about themes can be found in the [features page](https://github.com/pwnlog/Minima/wiki/Features) of the wiki site. Information about wallpapers can be found at the installation page in the [wallpapers section](https://github.com/pwnlog/Minima/wiki/Installation#Wallpapers).
 
 # Install
 
@@ -40,7 +158,7 @@ Install the configuration in your host:
 ```
 
 > [!NOTE]
-> Do NOT run this script with root or sudo, please read the [wiki installation](https://github.com/pwnlog/Minima/wiki/Installation) page for more information.
+> Do NOT run this script with root or sudo; please read the [wiki installation page](https://github.com/pwnlog/Minima/wiki/Installation) for more information.
 
 ## Neovim 
 

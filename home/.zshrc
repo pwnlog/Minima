@@ -376,8 +376,8 @@ function man() {
 }
 
 function remove(){
-	scrub -p dod $1
-	shred -zun 15 -v $1
+	scrub -p dod "$1"
+	shred -zun 15 -v "$1"
 }
 
 function setarget(){
@@ -389,7 +389,7 @@ function notarget(){
 }
 
 function hmap(){
-	sudo nmap -A $1 -Pn | awk '/Nmap scan report/{ip=$NF; next} /MAC Address:/{mac=$3; next} /Running.*:/ { os=substr($0, index($0, ":") + 2); gsub(/^\s+|\s+$/, "", os); next } /OS CPE:/{os_cpe=$NF; gsub(/[\(\)]/,"",os_cpe); print ip "," mac "," os "," os_cpe}' 
+	sudo nmap -A "$1" -Pn | awk '/Nmap scan report/{ip=$NF; next} /MAC Address:/{mac=$3; next} /Running.*:/ { os=substr($0, index($0, ":") + 2); gsub(/^\s+|\s+$/, "", os); next } /OS CPE:/{os_cpe=$NF; gsub(/[\(\)]/,"",os_cpe); print ip "," mac "," os "," os_cpe}' 
 }
 
 #############################
