@@ -160,7 +160,9 @@ if [ $? != 0 ]; then
 fi
 
 # Install Fonts
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.1/Iosevka.zip -O Iosevka.zip
+# Iosevka ~600 MB
+# wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.1/Iosevka.zip -O Iosevka.zip
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Iosevka.zip -O Iosevka.zip
 if [ $? != 0 ]; then
     echo "[-] Error: Failed to download Iosevka font"
     exit
@@ -182,12 +184,12 @@ if [ $? != 0 ]; then
     exit
 fi
 
-wget https://fonts.google.com/download?family=Roboto -O Roboto.zip
-if [ $? != 0 ]; then
-    echo "[-] Error: Failed to download Roboto font"
-    exit
-fi
-sudo unzip -o Roboto.zip -d /usr/share/fonts/
+#wget https://fonts.google.com/download?family=Roboto -O Roboto.zip
+#if [ $? != 0 ]; then
+#    echo "[-] Error: Failed to download Roboto font"
+#    exit
+#fi
+sudo unzip -o external/fonts/Roboto.zip -d /usr/share/fonts/
 if [ $? != 0 ]; then
     echo "[-] Command: $RED 'sudo unzip -o Roboto.zip -d /usr/share/fonts/' $RESET has failed"
     exit
@@ -398,10 +400,12 @@ sudo make install-all
 cd $CWD
 
 # Install Pywal
-sudo apt install -y imagemagick
-git clone https://github.com/dylanaraps/pywal
-cd pywal
-pip3 install --user .
+sudo apt install -y imagemagick pipx
+pipx install pywal
+sudo pipx install pywal
+#git clone https://github.com/dylanaraps/pywal
+#cd pywal
+#pip3 install --user .
 sudo cp $HOME/.local/bin/wal /usr/local/bin/wal
 sudo chmod 755 /usr/local/bin/wal
 export PATH="${PATH}:${HOME}/.local/bin/"
@@ -432,6 +436,8 @@ sed -ie 's/tmux_conf_theme=enabled/tmux_conf_theme=disabled/g' $HOME/.tmux.conf.
 
 # Install fzf
 sudo apt install -y fzf
+cp home/.fzf.sh $HOME/.fzf.sh
+sudo cp home/.fzf.sh /root/.fzf.sh
 
 ##################################################################################
 #********************************************************************************#
