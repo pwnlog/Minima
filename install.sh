@@ -2,7 +2,7 @@
 
 # Author: pwnlog
 # Description: Minima installer
-# OS Tested: Kali Linux 2023.4
+# OS Tested: Kali Linux 2024.3
 # Devices Tested: Virtual Machine
 
 ##################################################################################
@@ -436,8 +436,8 @@ sed -ie 's/tmux_conf_theme=enabled/tmux_conf_theme=disabled/g' $HOME/.tmux.conf.
 
 # Install fzf
 sudo apt install -y fzf
-cp home/.fzf.sh $HOME/.fzf.sh
-sudo cp home/.fzf.sh /root/.fzf.sh
+cp home/.fzf.zsh $HOME/.fzf.zsh
+sudo cp home/.fzf.zsh /root/.fzf.zsh
 
 ##################################################################################
 #********************************************************************************#
